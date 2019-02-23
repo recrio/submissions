@@ -1,0 +1,36 @@
+;
+; DA1B.asm
+;
+; Created: 2/21/2019 11:38:28 AM
+; Author : Josh R
+;
+
+
+; Replace with your application code
+.ORG 0
+.EQU STARTADDS = 0x0200
+	
+	LDI R25, 11
+	LDI XL, low(STARTADDS)
+	LDI XH, high(STARTADDS)
+	LDI YL, 0x00
+	LDI YH, 0x04
+	LDI ZL, 0x00
+	LDI ZH, 0x06
+
+POPULATE:
+	ST X+, R25
+	INC R25
+	CPI R25, 110
+	BREQ POPULATE
+
+DIV3:
+	LDI XL, low(STARTADDS)
+	LDI XH, high(STARTADDS)
+	LD R25, X+
+CHECK:
+	CPI R25, 0
+	BREQ D
+	SUBI R25, 3
+	
+	
