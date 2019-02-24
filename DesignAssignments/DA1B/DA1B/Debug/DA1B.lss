@@ -1,8 +1,8 @@
 
-AVRASM ver. 2.2.7  c:\users\josh r\Documents\Atmel Studio\7.0\DA1B\DA1B\main.asm Thu Feb 21 12:37:04 2019
+AVRASM ver. 2.2.7  E:\Documents\CPE301\repo\DesignAssignments\DA1B\DA1B\main.asm Sat Feb 23 15:35:07 2019
 
-[builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328pdef.inc'
-[builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328pdef.inc'
+[builtin](2): Including file 'E:/Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328pdef.inc'
+[builtin](2): Including file 'E:/Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328pdef.inc'
                                  
                                  ;
                                  
@@ -991,22 +991,68 @@ AVRASM ver. 2.2.7  c:\users\josh r\Documents\Atmel Studio\7.0\DA1B\DA1B\main.asm
                                  ; Author : Josh R
                                  ;
                                  
-                                 
-                                 ; Replace with your application code
                                  .ORG 0
                                  .EQU STARTADDS = 0x0200
+                                 .EQU DIVISIBLES = 0x0400
+                                 .EQU NDIVISIBLE = 0x0600
                                  	
-000000 e09b                      	LDI R25, 11
-000001 e0a0                      	LDI XL, low(STARTADDS)
-000002 e0b2                      	LDI XH, high(STARTADDS)
-                                 POPULATE:
-000003 369f                      	CPI R25, 111
-000004 f019                      	BREQ DONEPOP
-000005 939d                      	ST X+, R25
-000006 9593                      	INC R25
-000007 f7d9                      	BRNE POPULATE
+000000 e070                      	LDI R23, 0				; Holds Zero
+000001 e643                      	LDI R20, 99				; Counter = 99
+000002 e09b                      	LDI R25, 11				; First Value = 11
+000003 e0a0                      	LDI XL, low(STARTADDS)	; X points to
+000004 e0b2                      	LDI XH, high(STARTADDS) ; 0x0200
+000005 e0c0                      	LDI YL, low(DIVISIBLES)	; Y points to
+000006 e0d4                      	LDI YH, high(DIVISIBLES); 0x0400
+000007 e0e0                      	LDI ZL, low(NDIVISIBLE)	; Z points to
+000008 e0f6                      	LDI ZH, high(NDIVISIBLE); 0x0600
                                  
-000008 940c 0008                 DONEPOP: JMP DONEPOP
+                                 POPULATE:
+000009 939d                      	ST X+, R25				; Store R25 into X, increment pointer
+00000a 9593                      	INC R25					; Increment R25
+00000b 954a                      	DEC R20					; Decrement Counter
+00000c f7e1                      	BRNE POPULATE			; Keep populating if counter != 0
+                                 
+00000d e0a0                      	LDI XL, low(STARTADDS)	; X points to
+00000e e0b2                      	LDI XH, high(STARTADDS) ; 0x0200 again
+00000f e644                      	LDI R20, 99+1			; Counter = 99+1 because BREQ
+                                 							; checks before the operations
+                                 
+                                 DIV3:
+000010 954a                      	DEC R20					; Decrement Counter
+000011 f051                      	BREQ DONEDIV			; If counter = 0, parsed through all numbers
+000012 919c                      	LD R25, X				; R25 = X data
+000013 918d                      	LD R24, X+				; R24 = X data, increment X pointer
+                                 CHECK:
+000014 3090                      	CPI R25, 0				; Check if R25 = 0
+000015 f021                      	BREQ DIVIDES			; If 0 then divisible
+000016 5093                      	SUBI R25, 3				; Subtract R25 by 3
+000017 f7e2                      	BRPL CHECK				; If not negative, go back to CHECK
+                                 NDIVIDES:
+000018 9381                      	ST Z+, R24				; store R24 in Z
+000019 cff6                      	RJMP DIV3				; Jump to DIV3
+                                 DIVIDES:
+00001a 9389                      	ST Y+, R24				; store R25 in Y
+00001b cff4                      	RJMP DIV3				; Jump to DIV3
+                                 
+                                 DONEDIV:
+00001c e643                      	LDI R20, 99				; Counter set to 99 again
+00001d e0c0                      	LDI YL, low(DIVISIBLES) ; Y points to
+00001e e0d4                      	LDI YH, high(DIVISIBLES); 0x0400 again
+00001f e0e0                      	LDI ZL, low(NDIVISIBLE) ; Z points to
+000020 e0f6                      	LDI ZH, high(NDIVISIBLE); 0x0600 again
+                                 
+                                 SUM:
+000021 9159                      	LD R21, Y+				; R21 = Y data, increment Y pointer
+000022 9161                      	LD R22, Z+				; R22 = Z data, increment Z pointer
+000023 0f15                      	ADD R17, R21			; R17 = R17 + R21
+000024 1f07                      	ADC R16, R23			; R16 = R16 + 0 + Carry
+000025 0f36                      	ADD R19, R22			; R19 = R19 + R22
+000026 1f27                      	ADC R18, R23			; R18 = R18 + 0 + Carry
+000027 954a                      	DEC R20					; Decrement counter
+000028 f7c1                      	BRNE SUM				; if counter != 0 keep summing
+                                 
+000029 cfff                      DONE: RJMP DONE
+                                 
 
 
 RESOURCE USE INFORMATION
@@ -1024,39 +1070,39 @@ counted separately from r26..r31 here.
 .dseg memory usage only counts static data declared with .byte
 
 "ATmega328P" register use summary:
-x  :   1 y  :   0 z  :   0 r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 
+x  :   3 y  :   2 z  :   2 r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 
 r5 :   0 r6 :   0 r7 :   0 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 
-r13:   0 r14:   0 r15:   0 r16:   0 r17:   0 r18:   0 r19:   0 r20:   0 
-r21:   0 r22:   0 r23:   0 r24:   0 r25:   4 r26:   1 r27:   1 r28:   0 
-r29:   0 r30:   0 r31:   0 
-Registers used: 4 out of 35 (11.4%)
+r13:   0 r14:   0 r15:   0 r16:   1 r17:   1 r18:   1 r19:   1 r20:   6 
+r21:   2 r22:   2 r23:   3 r24:   3 r25:   6 r26:   2 r27:   2 r28:   2 
+r29:   2 r30:   2 r31:   2 
+Registers used: 19 out of 35 (54.3%)
 
 "ATmega328P" instruction use summary:
-.lds  :   0 .sts  :   0 adc   :   0 add   :   0 adiw  :   0 and   :   0 
+.lds  :   0 .sts  :   0 adc   :   2 add   :   2 adiw  :   0 and   :   0 
 andi  :   0 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
-brcc  :   0 brcs  :   0 break :   0 breq  :   1 brge  :   0 brhc  :   0 
+brcc  :   0 brcs  :   0 break :   0 breq  :   2 brge  :   0 brhc  :   0 
 brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 
-brne  :   1 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
+brne  :   2 brpl  :   1 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
 brvs  :   0 bset  :   0 bst   :   0 call  :   0 cbi   :   0 cbr   :   0 
 clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   0 cls   :   0 
 clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   0 cpc   :   0 
-cpi   :   1 cpse  :   0 dec   :   0 eor   :   0 fmul  :   0 fmuls :   0 
-fmulsu:   0 icall :   0 ijmp  :   0 in    :   0 inc   :   1 jmp   :   1 
-ld    :   0 ldd   :   0 ldi   :   3 lds   :   0 lpm   :   0 lsl   :   0 
+cpi   :   1 cpse  :   0 dec   :   3 eor   :   0 fmul  :   0 fmuls :   0 
+fmulsu:   0 icall :   0 ijmp  :   0 in    :   0 inc   :   1 jmp   :   0 
+ld    :   4 ldd   :   0 ldi   :  17 lds   :   0 lpm   :   0 lsl   :   0 
 lsr   :   0 mov   :   0 movw  :   0 mul   :   0 muls  :   0 mulsu :   0 
 neg   :   0 nop   :   0 or    :   0 ori   :   0 out   :   0 pop   :   0 
-push  :   0 rcall :   0 ret   :   0 reti  :   0 rjmp  :   0 rol   :   0 
+push  :   0 rcall :   0 ret   :   0 reti  :   0 rjmp  :   3 rol   :   0 
 ror   :   0 sbc   :   0 sbci  :   0 sbi   :   0 sbic  :   0 sbis  :   0 
 sbiw  :   0 sbr   :   0 sbrc  :   0 sbrs  :   0 sec   :   0 seh   :   0 
 sei   :   0 sen   :   0 ser   :   0 ses   :   0 set   :   0 sev   :   0 
-sez   :   0 sleep :   0 spm   :   0 st    :   1 std   :   0 sts   :   0 
-sub   :   0 subi  :   0 swap  :   0 tst   :   0 wdr   :   0 
-Instructions used: 7 out of 113 (6.2%)
+sez   :   0 sleep :   0 spm   :   0 st    :   3 std   :   0 sts   :   0 
+sub   :   0 subi  :   1 swap  :   0 tst   :   0 wdr   :   0 
+Instructions used: 13 out of 113 (11.5%)
 
 "ATmega328P" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x000014     20      0     20   32768   0.1%
+[.cseg] 0x000000 0x000054     84      0     84   32768   0.3%
 [.dseg] 0x000100 0x000100      0      0      0    2048   0.0%
 [.eseg] 0x000000 0x000000      0      0      0    1024   0.0%
 
