@@ -1,0 +1,33 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.2.7</VERSION>
+ <DEVICE>"ATmega328P"</DEVICE>
+ <WORKING_DIR>C:\Users\Joshua\Documents\Atmel Studio\7.0\DA2A_Task1\DA2A_Task1\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>E:/Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc</DIR>
+  <DIR>E:\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>C:\Users\Joshua\Documents\Atmel Studio\7.0\DA2A_Task1\DA2A_Task1\main.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>E:/Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328pdef.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>C:\Users\Joshua\Documents\Atmel Studio\7.0\DA2A_Task1\DA2A_Task1\Debug\DA2A_Task1.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>DA2A_Task1.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>DA2A_Task1.map</FILE>
+  <FILE>DA2A_Task1.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <init><FILE>C:\Users\Joshua\Documents\Atmel Studio\7.0\DA2A_Task1\DA2A_Task1\main.asm</FILE><LINE>3</LINE></init>
+  <main><FILE>C:\Users\Joshua\Documents\Atmel Studio\7.0\DA2A_Task1\DA2A_Task1\main.asm</FILE><LINE>11</LINE></main>
+  <TCNT1_RESET><FILE>C:\Users\Joshua\Documents\Atmel Studio\7.0\DA2A_Task1\DA2A_Task1\main.asm</FILE><LINE>26</LINE></TCNT1_RESET>
+  <delay_ON><FILE>C:\Users\Joshua\Documents\Atmel Studio\7.0\DA2A_Task1\DA2A_Task1\main.asm</FILE><LINE>50</LINE></delay_ON>
+  <delay_OFF><FILE>C:\Users\Joshua\Documents\Atmel Studio\7.0\DA2A_Task1\DA2A_Task1\main.asm</FILE><LINE>36</LINE></delay_OFF>
+  <check_high_ON><FILE>C:\Users\Joshua\Documents\Atmel Studio\7.0\DA2A_Task1\DA2A_Task1\main.asm</FILE><LINE>31</LINE></check_high_ON>
+  <check_high_OFF><FILE>C:\Users\Joshua\Documents\Atmel Studio\7.0\DA2A_Task1\DA2A_Task1\main.asm</FILE><LINE>45</LINE></check_high_OFF>
+ </LABELS>
+</ASSEMBLER_INFO>
