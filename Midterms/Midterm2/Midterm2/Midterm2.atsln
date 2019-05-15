@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Atmel Studio Solution File, Format Version 11.00
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "Midterm2", "Midterm2.cproj", "{FF0F10C9-8DBE-4254-AA43-9DE2CFAB20BA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FF0F10C9-8DBE-4254-AA43-9DE2CFAB20BA}.Debug|AVR.ActiveCfg = Debug|AVR
+		{FF0F10C9-8DBE-4254-AA43-9DE2CFAB20BA}.Debug|AVR.Build.0 = Debug|AVR
+		{FF0F10C9-8DBE-4254-AA43-9DE2CFAB20BA}.Release|AVR.ActiveCfg = Release|AVR
+		{FF0F10C9-8DBE-4254-AA43-9DE2CFAB20BA}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
